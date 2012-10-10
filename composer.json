@@ -1,0 +1,30 @@
+{
+    "name": "rtens/rdfanimate",
+    "description": "Template animation engine using RDFa annotations for PHP",
+    "keywords": ["template", "RDFa", "template animation", "watoki"],
+    "homepage": "http://github.com/rtens/rdfanimate",
+    "type": "library",
+    "license": "MIT",
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://packages.zendframework.com/"
+        }
+    ],
+    "authors": [
+        {
+            "name": "Nikolas Martens",
+            "email": "Nikolas.M@rtens.org",
+            "homepage": "http://rtens.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.1",
+        "rtens/collections": "*"
+    },
+    "autoload": {
+        "psr-0": {
+            "rtens": "src/"
+        }
+    }
+}
