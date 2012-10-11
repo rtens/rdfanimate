@@ -1,3 +1,5 @@
 /vendor
 /concept
 /.idea*
+/build
+/phpunit.xml
