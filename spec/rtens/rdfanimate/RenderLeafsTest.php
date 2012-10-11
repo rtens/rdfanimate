@@ -1,7 +1,7 @@
 <?php
 namespace spec\rtens\rdfanimate;
 
-class TestRenderLeafs extends Test {
+class RenderLeafsTest extends Test {
 
     static $CLASSNAME = __CLASS__;
 

@@ -1,7 +1,7 @@
 <?php
 namespace spec\rtens\rdfanimate;
 
-class TestRenderLists extends Test {
+class RenderListsTest extends Test {
 
     static $CLASSNAME = __CLASS__;
 
