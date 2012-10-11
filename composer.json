@@ -5,12 +5,6 @@
     "homepage": "http://github.com/rtens/rdfanimate",
     "type": "library",
     "license": "MIT",
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "http://packages.zendframework.com/"
-        }
-    ],
     "authors": [
         {
             "name": "Nikolas Martens",
