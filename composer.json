@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": ">=5.3.2",
-        "rtens/collections": "dev-master"
+        "rtens/collections": "*"
     },
     "autoload": {
         "psr-0": {
