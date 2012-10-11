@@ -18,7 +18,8 @@
     },
     "autoload": {
         "psr-0": {
-            "rtens": "src/"
+            "rtens": "src/",
+			"spec": "."
         }
     }
 }

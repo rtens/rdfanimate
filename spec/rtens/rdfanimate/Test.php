@@ -1,5 +1,5 @@
 <?php
-namespace rtens\rdfanimate;
+namespace spec\rtens\rdfanimate;
 
 use rtens\collections\Collection;
 use rtens\rdfanimate\renderer\RdfaRendererFactory;

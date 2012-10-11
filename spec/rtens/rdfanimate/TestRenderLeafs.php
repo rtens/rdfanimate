@@ -1,5 +1,5 @@
 <?php
-namespace rtens\rdfanimate;
+namespace spec\rtens\rdfanimate;
 
 class TestRenderLeafs extends Test {
 
