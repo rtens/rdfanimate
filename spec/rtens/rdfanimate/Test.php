@@ -40,7 +40,7 @@ abstract class Test extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($this->clean($expected), $this->clean($this->rendered));
     }
 
-    private function clean($string) {
+    protected function clean($string) {
         return trim(preg_replace('/\s*(\S.+\S)\s*/', '$1', $string));
     }
 }
