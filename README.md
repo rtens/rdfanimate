@@ -144,12 +144,9 @@ If you don't have Composer yet, or want to install a different branch you can us
 To use it in your own project, add the following lines to your `composer.json`.
 
     "require" : {
-        "rtens/rdfanimate" : "@dev",
-        "rtens/collections" : "@dev",
-        "rtens/smokey" : "@dev"
-    }
-
-*Note*: All requirements be included since Composer does not resolve requirements recursively if the projects have no releases.
+        "rtens/rdfanimate" : "*"
+    },
+    "minimum-stability": "dev"
 	
 [Composer]: http://getcomposer.org/
 
