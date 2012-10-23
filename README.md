@@ -58,21 +58,6 @@ leads to
 	<span property="one">Hello</span>
 	<span property="two" title="Everyone">World</span>
 
-### Replace content with dynamic values ###
-
-*Lambdas.* The referenced data may be the return value of a method or closure. Only zero-arguments functions are possible. This way, dependent and thus redundant data can be calculated on-demand.
-
-	{ 
-		"number": {
-			"value": 2,
-			"isMany": function (this) { return this.value != 1 } 
-		}
-	}
-
-can be used with
-
-    <span property="number">2</span> car<span rel="number" property="isMany">s</span>
-
 ### Navigate complex data ###
 
 *Sections.* Nested data structures can be traversed using the `rel` attribute. To access the inner data of the following view model
@@ -90,6 +75,21 @@ one of the following templates can be used
 	<div rel="outer"><span rel="inner"><span property="message">Hello World</span></span></div>
 	
 	<div rel="outer"><span refl="inner" property="inner">Hello World</span></div>
+
+### Replace content with dynamic values ###
+
+*Lambdas.* The referenced data may be the return value of a method or closure. Only zero-arguments methods are possible. Closures receive the parent model as their only argument. This way, dependent and thus redundant data can be calculated on-demand.
+
+	{
+		"number": {
+			"value": 2,
+			"isMany": function (this) { return this.value != 1 }
+		}
+	}
+
+can be used with
+
+    <span property="number">2</span> car<span rel="number" property="isMany">s</span>
 
 ### Remove elements ###
 

@@ -45,9 +45,8 @@ class DynamicValuesTest extends Test {
             public $shorten;
             public function __construct($string) {
                 $this->value = $string;
-                $that = $this;
-                $this->shorten = function () use ($that) {
-                    return substr($that->value, 0, 4);
+                $this->shorten = function (StringModel $model) {
+                    return substr($model->value, 0, 4);
                 };
             }
         }');

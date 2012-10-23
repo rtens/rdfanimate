@@ -28,7 +28,7 @@ class LeafModel {
             return property_exists($this->model, $valuePropertyName) ? (string)$this->model->$valuePropertyName : null;
         } else if ($this->isCallable()) {
             $callable = $this->model;
-            return $callable();
+            return $callable($this->nodeModel);
         } else {
             return (string)$this->model;
         }
