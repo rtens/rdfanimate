@@ -37,10 +37,32 @@ abstract class Renderer {
     }
 
     protected function hasModelProperty($name) {
-        return is_object($this->model) && property_exists($this->model, $name);
+        return $this->hasStaticModelProperty($name) || $this->hasDynamicModelProperty($name);
     }
 
     protected function getModelProperty($name) {
-        return $this->hasModelProperty($name) ? $this->model->$name : null;
+        if ($this->hasStaticModelProperty($name)) {
+            return $this->getStaticModelProperty($name);
+        } else if ($this->hasDynamicModelProperty($name)) {
+            return $this->getDynamicModelProperty($name);
+        } else {
+            return null;
+        }
+    }
+
+    private function hasStaticModelProperty($name) {
+        return is_object($this->model) && property_exists($this->model, $name);
+    }
+
+    private function getStaticModelProperty($name) {
+        return $this->model->$name;
+    }
+
+    private function hasDynamicModelProperty($name) {
+        return is_object($this->model) && method_exists($this->model, $name);
+    }
+
+    private function getDynamicModelProperty($name) {
+        return $this->model->{$name}();
     }
 }
