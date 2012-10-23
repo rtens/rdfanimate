@@ -60,7 +60,7 @@ leads to
 
 ### Replace content with dynamic values ###
 
-*Lambdas.* (not implemented yet) The referenced data may be the return value of a method or closure. Only zero-arguments methods are possible. A closure receives the containing object as its single argument. This way, dependent and thus redundant data can be calculated on-demand.
+*Lambdas.* The referenced data may be the return value of a method or closure. Only zero-arguments functions are possible. This way, dependent and thus redundant data can be calculated on-demand.
 
 	{ 
 		"number": {
@@ -68,6 +68,10 @@ leads to
 			"isMany": function (this) { return this.value != 1 } 
 		}
 	}
+
+can be used with
+
+    <span property="number">2</span> car<span rel="number" property="isMany">s</span>
 
 ### Navigate complex data ###
 
