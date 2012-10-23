@@ -23,9 +23,12 @@ class LeafModel {
     }
 
     public function getText() {
-        if (is_object($this->model)) {
+        if ($this->isObject()) {
             $valuePropertyName = 'value';
             return property_exists($this->model, $valuePropertyName) ? (string)$this->model->$valuePropertyName : null;
+        } else if ($this->isCallable()) {
+            $callable = $this->model;
+            return $callable();
         } else {
             return (string)$this->model;
         }
@@ -36,7 +39,11 @@ class LeafModel {
     }
 
     public function isObject() {
-        return is_object($this->model);
+        return is_object($this->model) && !$this->isCallable();
+    }
+
+    private function isCallable() {
+        return is_callable($this->model);
     }
 
     public function getProperty($name) {

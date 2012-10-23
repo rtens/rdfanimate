@@ -40,7 +40,23 @@ class DynamicValuesTest extends Test {
     }
 
     public function testClosureCall() {
-        $this->markTestIncomplete('Not implemented yet');
+        $this->givenTheClass('class StringModel {
+            public $value;
+            public $shorten;
+            public function __construct($string) {
+                $this->value = $string;
+                $that = $this;
+                $this->shorten = function () use ($that) {
+                    return substr($that->value, 0, 4);
+                };
+            }
+        }');
+
+        $this->givenTheModelIsInstanceOfClass('StringModel', 'SomeLongString');
+
+        $this->whenIRender('<div property="shorten">Shorten</div>');
+
+        $this->thenTheResultShouldBe('<div property="shorten">Some</div>');
     }
 
     private function givenTheClass($def) {
