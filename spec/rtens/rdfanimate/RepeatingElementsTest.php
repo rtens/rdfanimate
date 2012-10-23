@@ -88,4 +88,34 @@ class RepeatingElementsTest extends Test {
                 <span property="name">Dos</span>
             </div>');
     }
+
+    public function testRemoveInnerElementFromItem() {
+        $this->givenTheModel('{
+            "item": [
+                {   "name": "One",
+                    "call": true
+                },
+                {
+                    "name": "Two",
+                    "call": false
+                }
+            ]
+        }');
+
+        $this->whenIRender('
+            <div rel="item">
+                <span property="name">Name</span>
+                <span property="call">!!</span>
+            </div>
+        ');
+        $this->thenTheResultShouldBe('
+            <div rel="item">
+                <span property="name">One</span>
+                <span property="call">!!</span>
+            </div>
+            <div rel="item">
+                <span property="name">Two</span>
+            </div>
+        ');
+    }
 }

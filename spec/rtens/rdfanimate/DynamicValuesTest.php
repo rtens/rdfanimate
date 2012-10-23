@@ -27,14 +27,16 @@ class DynamicValuesTest extends Test {
         $this->givenTheModelIsInstanceOfClass('MethodModel', 2);
 
         $this->whenIRender('
-        <div rel="number">
-            <span property="value">X</span> is a <span property="isBig">BIG</span><span property="isNotBig">small</span> number
-        </div>');
+            <div rel="number">
+                <span property="value">X</span> is a <span property="isBig">BIG</span><span property="isNotBig">small</span> number
+            </div>
+        ');
 
         $this->thenTheResultShouldBe('
-        <div rel="number">
-            <span property="value">2</span> is a <span property="isNotBig">small</span> number
-        </div>');
+            <div rel="number">
+                <span property="value">2</span> is a <span property="isNotBig">small</span> number
+            </div>
+        ');
     }
 
     public function testClosureCall() {

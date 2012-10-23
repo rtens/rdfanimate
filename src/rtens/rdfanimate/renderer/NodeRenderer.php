@@ -57,10 +57,12 @@ class NodeRenderer extends RdfaRenderer {
     }
 
     private function insertCopiesOfElement(Element $element) {
-        $copy = $element->copy();
         foreach ($this->getItemsModels() as $itemModel) {
-            $animator = $this->getFactory()->createRendererFor($itemModel);
-            $element->insertSibling($animator->manipulate($copy->copy()));
+            $copy = $element->copy();
+            $element->insertSibling($copy);
+
+            $renderer = $this->getFactory()->createRendererFor($itemModel);
+            $renderer->manipulate($copy);
         }
     }
 
