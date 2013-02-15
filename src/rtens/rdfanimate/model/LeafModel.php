@@ -1,6 +1,8 @@
 <?php
 namespace rtens\rdfanimate\model;
 
+use rtens\collections\Map;
+
 class LeafModel {
 
     public static $CLASSNAME = __CLASS__;
@@ -25,7 +27,7 @@ class LeafModel {
     public function getText() {
         if ($this->isObject()) {
             $valuePropertyName = 'value';
-            return property_exists($this->model, $valuePropertyName) ? (string)$this->model->$valuePropertyName : null;
+            return $this->hasProperty($valuePropertyName) ? (string)$this->getProperty($valuePropertyName) : null;
         } else if ($this->isCallable()) {
             $callable = $this->model;
             return $callable($this->nodeModel);
@@ -35,7 +37,8 @@ class LeafModel {
     }
 
     public function hasProperty($name) {
-        return $this->isObject() && property_exists($this->model, $name);
+        return $this->isObject() && property_exists($this->model, $name)
+                || $this->model instanceof Map && $this->model->has($name);
     }
 
     public function isObject() {
@@ -47,7 +50,7 @@ class LeafModel {
     }
 
     public function getProperty($name) {
-        return $this->model->$name;
+        return $this->model instanceof Map ? $this->model->get($name) : $this->model->$name;
     }
 
     public function isNullOrFalse() {

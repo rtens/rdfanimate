@@ -68,7 +68,7 @@ class DynamicValuesTest extends Test {
 
         $refl = new \ReflectionClass($classname);
         $model = $refl->newInstanceArgs($params);
-        $this->createRenderer($model);
+        $this->renderer = $this->createRenderer($model);
     }
 
 }

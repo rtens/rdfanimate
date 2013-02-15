@@ -1,6 +1,8 @@
 <?php
 namespace rtens\rdfanimate;
 
+use rtens\collections\Map;
+
 abstract class Renderer {
 
     private $model;
@@ -51,7 +53,8 @@ abstract class Renderer {
     }
 
     private function hasStaticModelProperty($name) {
-        return is_object($this->model) && property_exists($this->model, $name);
+        return is_object($this->model) && property_exists($this->model, $name)
+                || $this->model instanceof Map && $this->model->has($name);
     }
 
     private function getStaticModelProperty($name) {

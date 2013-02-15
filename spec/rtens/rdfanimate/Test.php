@@ -2,16 +2,30 @@
 namespace spec\rtens\rdfanimate;
 
 use rtens\collections\Collection;
+use rtens\rdfanimate\renderer\RdfaRenderer;
 use rtens\rdfanimate\renderer\RdfaRendererFactory;
 
 abstract class Test extends \PHPUnit_Framework_TestCase {
 
+    /**
+     * @var string
+     */
+    private $renderedFromMaps;
+
+    /**
+     * @var string
+     */
     private $rendered;
 
     /**
      * @var \rtens\rdfanimate\renderer\RdfaRenderer
      */
-    private $renderer;
+    protected $renderer;
+
+    /**
+     * @var \rtens\rdfanimate\renderer\RdfaRenderer
+     */
+    public $rendererMaps;
 
     protected function background() {
     }
@@ -24,24 +38,37 @@ abstract class Test extends \PHPUnit_Framework_TestCase {
 
     protected function givenTheModel($json) {
         $model = Collection::toCollections(json_decode($json));
-        $this->createRenderer($model);
+        $this->renderer = $this->createRenderer($model);
+
+        $decoded = json_decode($json, true);
+        $modelMaps = Collection::toCollections($decoded);
+        $this->rendererMaps = $this->createRenderer($modelMaps);
     }
 
     protected function createRenderer($model) {
         $factory = new RdfaRendererFactory();
-        $this->renderer = $factory->createRendererFor($model);
+        return $factory->createRendererFor($model);
     }
 
     protected function whenIRender($markup) {
-        $rendered = $this->renderer->render("<html><body>$markup</body></html>");
-        if (strlen($rendered) <= 11) {
-            $this->rendered = '';
+        $this->rendered = $this->render($markup, $this->renderer);
+
+        if ($this->rendererMaps) {
+            $this->renderedFromMaps = $this->render($markup, $this->rendererMaps);
         }
-        $this->rendered = substr($rendered, 15, -15);
+    }
+
+    private function render($markup, RdfaRenderer $renderer) {
+        $rendered = $renderer->render("<html><body>$markup</body></html>");
+        return substr($rendered, 15, -15);
     }
 
     protected function thenTheResultShouldBe($expected) {
         $this->assertEquals($this->clean($expected), $this->clean($this->rendered));
+
+        if ($this->rendererMaps) {
+            $this->assertEquals($this->clean($expected), $this->clean($this->renderedFromMaps));
+        }
     }
 
     protected function clean($string) {
