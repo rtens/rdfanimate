@@ -1,6 +1,9 @@
 <?php
 namespace spec\rtens\rdfanimate;
 
+use rtens\collections\Liste;
+use rtens\collections\Map;
+
 class RepeatingElementsTest extends Test {
 
     static $CLASSNAME = __CLASS__;
@@ -116,6 +119,22 @@ class RepeatingElementsTest extends Test {
             <div rel="item">
                 <span property="name">Two</span>
             </div>
+        ');
+    }
+
+    public function testEmptyListShouldBeCleared() {
+        $this->givenTheModelObject(new Map(array('item' => new Liste())));
+
+        $this->whenIRender('
+            <ul>
+                <li rel="item">
+                    <span property="name">Name</span>
+                    <span property="call">!!</span>
+                </li>
+            </ul>
+        ');
+        $this->thenTheResultShouldBe('
+            <ul></ul>
         ');
     }
 }

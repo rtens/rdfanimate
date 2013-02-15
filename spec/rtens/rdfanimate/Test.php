@@ -38,14 +38,18 @@ abstract class Test extends \PHPUnit_Framework_TestCase {
 
     protected function givenTheModel($json) {
         $model = Collection::toCollections(json_decode($json));
-        $this->renderer = $this->createRenderer($model);
+        $this->givenTheModelObject($model);
 
         $decoded = json_decode($json, true);
         $modelMaps = Collection::toCollections($decoded);
         $this->rendererMaps = $this->createRenderer($modelMaps);
     }
 
-    protected function createRenderer($model) {
+    protected function givenTheModelObject($model) {
+        $this->renderer = $this->createRenderer($model);
+    }
+
+    private function createRenderer($model) {
         $factory = new RdfaRendererFactory();
         return $factory->createRendererFor($model);
     }
