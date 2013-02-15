@@ -18,7 +18,7 @@ class Element {
 
     public static function fromString($document) {
         $doc = new \DOMDocument();
-        if (!$doc->loadXML($document)) {
+        if (!$doc->loadHTML($document)) {
             throw new ParsingException('Error while parsing mark-up.');
         }
 

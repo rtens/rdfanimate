@@ -33,11 +33,11 @@ abstract class Test extends \PHPUnit_Framework_TestCase {
     }
 
     protected function whenIRender($markup) {
-        $rendered = $this->renderer->render("<div>$markup</div>");
+        $rendered = $this->renderer->render("<html><body>$markup</body></html>");
         if (strlen($rendered) <= 11) {
             $this->rendered = '';
         }
-        $this->rendered = substr($rendered, 5, -6);
+        $this->rendered = substr($rendered, 15, -15);
     }
 
     protected function thenTheResultShouldBe($expected) {
