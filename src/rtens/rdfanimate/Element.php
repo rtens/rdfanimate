@@ -9,6 +9,18 @@ use rtens\collections\Liste;
 
 class Element {
 
+    private static $tagPairs = array(
+        '<html><body>' => array(),
+        '<body>' => array('<html>', '</html>'),
+        '<html>' => array('<body>', '</body>'),
+        '' => array('<html><body>', '</body></html>'),
+    );
+
+    /**
+     * @var string Original input string (without white spaces between tags)
+     */
+    private $input;
+
     private $element;
 
     /**
@@ -18,11 +30,15 @@ class Element {
 
     public static function fromString($document) {
         $doc = new \DOMDocument();
+        $document = mb_convert_encoding($document, 'HTML-ENTITIES', 'UTF-8');
+
         if (!$doc->loadHTML($document)) {
             throw new ParsingException('Error while parsing mark-up.');
         }
 
-        return new Element($doc->documentElement);
+        $element = new Element($doc->documentElement);
+        $element->input = trim(preg_replace('/>\s+?</', '><', $document));
+        return $element;
     }
 
     private function __construct(\DOMElement $element) {
@@ -99,7 +115,16 @@ class Element {
     public function __toString() {
         $doc = $this->element->ownerDocument;
         $doc->formatOutput = true;
-        return $doc->saveHTML($this->element);
+        $content = $doc->saveHTML($this->element);
+
+        foreach (self::$tagPairs as $match => $replace) {
+            if (substr($this->input, 0, strlen($match)) == $match) {
+                $content = str_replace($replace, '', $content);
+                break;
+            }
+        }
+
+        return $content;
     }
 
     public function copy() {
