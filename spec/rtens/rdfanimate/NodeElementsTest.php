@@ -24,7 +24,7 @@ class NodeElementsTest extends Test {
         $this->whenIRender('
             <div rel="post">
                 <div rel="author">
-                    <img property="image" src="" alt="Nothing"/>
+                    <img property="image" src="" alt="Nothing">
                     <a property="email" href="mailto:john.doe@example.com">
                         <span property="name">John Doe</span>
                     </a>
@@ -34,7 +34,7 @@ class NodeElementsTest extends Test {
         $this->thenTheResultShouldBe('
             <div rel="post">
                 <div rel="author">
-                    <img property="image" src="http://example.com/image.jpg" alt="Timmys Image"/>
+                    <img property="image" src="http://example.com/image.jpg" alt="Timmys Image">
                     <a property="email" href="mailto:timmy@tester.com">
                         <span property="name">Timmy Tester</span>
                     </a>

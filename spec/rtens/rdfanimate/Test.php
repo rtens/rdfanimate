@@ -64,7 +64,7 @@ abstract class Test extends \PHPUnit_Framework_TestCase {
 
     private function render($markup, RdfaRenderer $renderer) {
         $rendered = $renderer->render("<html><body>$markup</body></html>");
-        return substr($rendered, 15, -15);
+        return substr($rendered, 12, -14);
     }
 
     protected function thenTheResultShouldBe($expected) {

@@ -99,7 +99,7 @@ class Element {
     public function __toString() {
         $doc = $this->element->ownerDocument;
         $doc->formatOutput = true;
-        return $doc->saveXML($this->element);
+        return $doc->saveHTML($this->element);
     }
 
     public function copy() {
