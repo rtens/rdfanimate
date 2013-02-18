@@ -17,6 +17,11 @@ class Element {
     );
 
     /**
+     * @var Liste|null
+     */
+    public $children;
+
+    /**
      * @var string Original input string (without white spaces between tags)
      */
     private $input;
@@ -27,6 +32,16 @@ class Element {
      * @var null|Map
      */
     private $attributes;
+
+    /**
+     * @var Element|null
+     */
+    private $parent;
+
+    /**
+     * @var Element|null
+     */
+    private $nextSibling;
 
     public static function fromString($document) {
         $doc = new \DOMDocument();
@@ -41,8 +56,9 @@ class Element {
         return $element;
     }
 
-    private function __construct(\DOMElement $element) {
+    private function __construct(\DOMNode $element, Element $parent = null) {
         $this->element = $element;
+        $this->parent = $parent;
     }
 
     /**
@@ -74,41 +90,77 @@ class Element {
     }
 
     public function insertSibling(Element $child) {
-        $this->element->parentNode->insertBefore($child->element, $this->element);
+        $this->parent->insertBefore($child, $this);
+    }
+
+    private function insertBefore(Element $insert, Element $child) {
+        if ($this->children) {
+            $childIndex = $this->getChildren()->indexOf($child);
+            if ($childIndex > 0) {
+                $this->getChildren()->get($childIndex - 1)->nextSibling = $insert;
+            }
+            $insert->nextSibling = $child;
+            $this->getChildren()->insert($insert, $childIndex);
+        }
+        $this->element->insertBefore($insert->element, $child->element);
     }
 
     public function remove() {
-        $this->element->parentNode->removeChild($this->element);
+        $this->parent->removeChild($this);
+    }
+
+    private function removeChild(Element $child) {
+        if ($this->children) {
+            $childIndex = $this->getChildren()->indexOf($child);
+            if ($childIndex > 0) {
+                if ($childIndex == $this->getChildren()->count() - 1) {
+                    $this->getChildren()->get($childIndex - 1)->nextSibling = null;
+                } else {
+                    $this->getChildren()->get($childIndex - 1)->nextSibling = $this->getChildren()->get($childIndex + 1);
+                }
+            }
+            $this->getChildren()->remove($childIndex);
+        }
+        $child->parent = null;
+        $this->element->removeChild($child->element);
     }
 
     public function getNextSibling() {
-        $sibling = $this->element->nextSibling;
-        while ($sibling) {
-            if ($sibling instanceof \DOMElement) {
-                return new Element($sibling);
-            }
-            $sibling = $sibling->nextSibling;
-        }
-        return null;
+        return $this->nextSibling;
     }
 
     /**
      * @return \rtens\collections\Liste|Element[]
      */
     public function getChildren() {
-        $children = new Liste();
-        foreach ($this->element->childNodes as $child) {
-            if ($child instanceof \DOMElement) {
-                $children->append(new Element($child));
+        if (!$this->children) {
+            $this->children = new Liste();
+            /** @var $lastChild Element|null */
+            $lastChild = null;
+            foreach ($this->element->childNodes as $child) {
+                if ($child instanceof \DOMElement) {
+                    $nextChild = new Element($child, $this);
+                    $this->children->append($nextChild);
+
+                    if ($lastChild) {
+                        $lastChild->nextSibling = $nextChild;
+                    }
+                    $lastChild = $nextChild;
+                }
             }
         }
-        return $children;
+        return $this->children;
     }
 
     public function setContent($content) {
+        foreach ($this->getChildren() as $child) {
+            $this->removeChild($child);
+        }
+
         foreach ($this->element->childNodes as $child) {
             $this->element->removeChild($child);
         }
+
         $this->element->appendChild(new \DOMText($content));
     }
 
@@ -130,14 +182,10 @@ class Element {
     public function copy() {
         /** @var $clone \DOMElement */
         $clone = $this->element->cloneNode(true);
-        return new Element($clone);
+        return new Element($clone, $this->parent);
     }
 
     public function getParent() {
-        if ($this->element->parentNode) {
-            return new Element($this->element->parentNode);
-        } else {
-            return null;
-        }
+        return $this->parent;
     }
 }

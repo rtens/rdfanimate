@@ -21,7 +21,7 @@ abstract class RdfaRenderer extends Renderer {
     abstract protected function manipulate(Element $element);
 
     /**
-     * @return \rtens\rdfanimate\RendererFactory|RdfaRendererFactory
+     * @return RdfaRendererFactory
      */
     protected function getFactory() {
         return parent::getFactory();
