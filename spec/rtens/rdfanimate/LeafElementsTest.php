@@ -24,6 +24,13 @@ class LeafElementsTest extends Test {
         $this->thenTheResultShouldBe('Hello');
     }
 
+    public function testZeroLeafValueShouldStay() {
+        $this->givenTheModel('{"zero":0}');
+
+        $this->whenIRender('This is <span property="zero">zero</span>');
+        $this->thenTheResultShouldBe('This is <span property="zero">0</span>');
+    }
+
     public function testLeafTextShouldBeReplaced() {
         $this->givenTheModel('{"greetings":"Hello", "name":"World"}');
 

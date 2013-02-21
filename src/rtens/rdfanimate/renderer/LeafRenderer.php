@@ -22,7 +22,7 @@ class LeafRenderer extends NodeRenderer {
             $this->manipulateAttributes($element);
         }
 
-        if (!$this->getModel()->isTrue() && $this->getModel()->getText()) {
+        if (!$this->getModel()->isTrue() && strlen($this->getModel()->getText())) {
             $element->setContent($this->getModel()->getText());
         }
 

@@ -30,7 +30,7 @@ class LeafModel {
             return $this->hasProperty($valuePropertyName) ? (string)$this->getProperty($valuePropertyName) : null;
         } else if ($this->isCallable()) {
             $callable = $this->model;
-            return $callable($this->nodeModel);
+            return (string)$callable($this->nodeModel);
         } else {
             return (string)$this->model;
         }
@@ -54,7 +54,7 @@ class LeafModel {
     }
 
     public function isNullOrFalse() {
-        return $this->model === null || $this->model == false;
+        return $this->model === null || $this->model === false;
     }
 
     public function isTrue() {
