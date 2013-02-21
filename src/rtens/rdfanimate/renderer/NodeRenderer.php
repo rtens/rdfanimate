@@ -52,7 +52,8 @@ class NodeRenderer extends RdfaRenderer {
                 $model = $this->getModel();
             }
 
-            $this->getFactory()->createRendererFor($model)->manipulate($child);
+            $renderer = $this->getFactory()->createRendererFor($model);
+            $renderer->manipulate($child);
         }
     }
 

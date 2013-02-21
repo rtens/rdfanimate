@@ -137,4 +137,67 @@ class RepeatingElementsTest extends Test {
             <ul></ul>
         ');
     }
+
+    public function testListOfLists() {
+        $this->givenTheModel('{
+            "week": [
+                {
+                    "count" : 1,
+                    "day": [
+                        { "number": 1 },
+                        { "number": 2 },
+                        { "number": 3 }
+                    ]
+                },
+                {
+                    "count" : 2,
+                    "day": [
+                        { "number": 4 },
+                        { "number": 5 },
+                        { "number": 6 }
+                    ]
+                }
+            ]
+        }');
+
+        $this->whenIRender('
+            <div rel="week">
+                <div property="count">count</div>
+                <div rel="day">
+                    <span property="number">#</span>
+                </div>
+            </div>
+            <div rel="week">
+                <div rel="day">
+                    <span property="number">should be deleted</span>
+                </div>
+            </div>
+        ');
+        $this->thenTheResultShouldBe('
+            <div rel="week">
+                <div property="count">1</div>
+                <div rel="day">
+                    <span property="number">1</span>
+                </div>
+                <div rel="day">
+                    <span property="number">2</span>
+                </div>
+                <div rel="day">
+                    <span property="number">3</span>
+                </div>
+            </div>
+            <div rel="week">
+                <div property="count">2</div>
+                <div rel="day">
+                    <span property="number">4</span>
+                </div>
+                <div rel="day">
+                    <span property="number">5</span>
+                </div>
+                <div rel="day">
+                    <span property="number">6</span>
+                </div>
+            </div>
+        ');
+    }
 }

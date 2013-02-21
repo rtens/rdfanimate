@@ -90,9 +90,11 @@ class ComplexTest extends Test {
                             <ul>
                                 <li rel="movie">
                                     <span property="title">Legend of the Lost</span> (<span property="year">1957</span>)
-                                </li><li rel="movie">
+                                </li>
+                                <li rel="movie">
                                     <span property="title">The Alamo</span> (<span property="year">1960</span>)
-                                </li><li rel="movie">
+                                </li>
+                                <li rel="movie">
                                     <span property="title">True Grit</span> (<span property="year">1969</span>)
                                 </li>
                             </ul>
