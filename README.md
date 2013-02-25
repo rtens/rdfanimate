@@ -2,6 +2,12 @@
 
 *RDFanimate* is a template engine which uses HTML annotated with RDFa attributes to render data provided by a view model.
 
+## Deprecated ##
+
+This project has been deprecated and replaced by [tempan]. It won't be maintained any further.
+
+[tempan]: http://github.com/rtens/tempan
+
 ## Purpose ##
 
 This project was inspired by Iain Dooleys post on [workingsoftware.com]. In his post, Iain argues that "As soon as I'm looking at more than one programming or markup language in the same file, I'm looking at spaghetti code." He refers to the mix-up of a templating language and HTML with most templating engines. He suggests that instead one should use HTML itself to bear the meta-data needed to manipulate the HTML on DOM level. He calls this *Template Animation*, hence the name of this project.
