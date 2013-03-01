@@ -6,7 +6,7 @@
 
 This project has been deprecated and replaced by [tempan]. It won't be maintained any further.
 
-[tempan]: http://github.com/rtens/tempan
+[tempan]: http://github.com/watoki/tempan
 
 ## Purpose ##
 
